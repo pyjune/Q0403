@@ -10,6 +10,7 @@ public class Solution {
 	static int [][]adj;
 	static int [] visited;
 	static int cnt;
+	static int min;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
@@ -18,6 +19,7 @@ public class Solution {
 		adj = new int [V+1][V+1];
 		visited = new int [V+1];
 		cnt=0;
+		min = Integer.MAX_VALUE; // 0x7fffffff;
 		for(int i = 0; i<E; i++)
 		{
 			int n1 = sc.nextInt();
@@ -26,8 +28,10 @@ public class Solution {
 			//adj[n2][n1] = 1; // 무향인 경우
 		}
 		//dfs(1);
-		dfs2(1, 4);
-		System.out.println(cnt);
+		//dfs2(1, 4);
+		//System.out.println(cnt);
+		dfs3(1, 4, 0);
+		System.out.println(min);
 		
 	}
 	public static void dfs(int n)
@@ -57,6 +61,27 @@ public class Solution {
 				if(adj[n][i]==1 && visited[i]==0)
 				{
 					dfs2(i, k);
+				}
+			}
+			visited[n] = 0;
+		}
+	}
+	public static void dfs3(int n, int k, int e)
+	{
+		if(n==k)
+		{
+			if(e<min)
+				min = e;
+		}
+		else
+		{
+			visited[n] = 1;
+			//System.out.print(n+" ");
+			for(int i = 1; i<=V; i++)
+			{
+				if(adj[n][i]==1 && visited[i]==0)
+				{
+					dfs3(i, k, e+1);
 				}
 			}
 			visited[n] = 0;
